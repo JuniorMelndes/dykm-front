@@ -16,6 +16,7 @@ export class AppComponent implements OnInit{
   nomeOriginal: string = '';
   nomeAteAgora: string = '';
   nomeDigitado: string = '';
+  contagem: number = 0;
   started: boolean = false;
 
 
@@ -36,20 +37,19 @@ export class AppComponent implements OnInit{
 
   getHiddenName(): string {
     let resultado = '';
-    if (!this.started && !this.dados?.name){
+    if (this.dados?.name){
       this.nomeOriginal = this.dados.name;
       for (let i = 0; i < this.dados.name.length; i++) {
         let letraAtual = this.dados.name[i];
-        if (letraAtual === ' ') {
-          resultado += '  '; // Mantém espaços
-        } else {
-          resultado += '_ ';
+        if(this.contagem > i){
+          resultado += this.dados.name[i] + " ";
+        }else{
+          if (letraAtual === ' ') {
+            resultado += '  '; // Mantém espaços
+          } else {
+            resultado += '_ ';
+          }
         }
-      }
-      this.nomeAteAgora = resultado;
-    }else if(this.started){
-      for(let i = 0; i < this.nomeDigitado.length; i++){
-        
       }
     }
     return resultado;
@@ -61,5 +61,8 @@ export class AppComponent implements OnInit{
 
   iniciar(){
     this.started = true;
+  }
+  revela(){
+    this.contagem += 1;
   }
 }
