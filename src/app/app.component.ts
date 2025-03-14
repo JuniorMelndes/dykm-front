@@ -14,10 +14,8 @@ export class AppComponent implements OnInit{
   title = 'dykm';
   dados: any;
   nomeOriginal: string = '';
-  nomeAteAgora: string = '';
-  nomeDigitado: string = '';
+  nomeTentado: string = '';
   contagem: number = 0;
-  started: boolean = false;
 
 
   constructor(private chamaApiService: ChamaApiService) {}
@@ -45,7 +43,7 @@ export class AppComponent implements OnInit{
           resultado += this.dados.name[i] + " ";
         }else{
           if (letraAtual === ' ') {
-            resultado += '  '; // Mantém espaços
+            resultado += '  ';
           } else {
             resultado += '_ ';
           }
@@ -56,11 +54,16 @@ export class AppComponent implements OnInit{
   }
 
   atualizarNome(event: any) {
-    this.nomeAteAgora = event.target.value;
+    this.nomeTentado = event.target.value;
   }
 
-  iniciar(){
-    this.started = true;
+  tentativa(){
+    if(this.nomeTentado === this.dados.name){
+      this.contagem = this.dados.name.length
+      alert("Parabéns, você acertou!!");
+    }else{
+      alert("Nome incorreto! Tente novamente.");
+    }
   }
   revela(){
     this.contagem += 1;
