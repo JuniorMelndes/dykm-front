@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChamaApiService } from '../../services/chama-api.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PrincipalComponent implements OnInit{
   title = 'dykm';
   dados: any;
-  username = '';
+  username: string = '';
   nomeOriginal: string = '';
   nomeTentado: string = '';
   contagem: number = 0;
@@ -26,12 +27,16 @@ export class PrincipalComponent implements OnInit{
 
   constructor(
     private chamaApiService: ChamaApiService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    const nav = this.router.getCurrentNavigation();
+    this.username = nav?.extras.state?.['username'] || '';
+  }
 
   ngOnInit() {
     console.log('Iniciando chamada para API...');
-    this.chamaApiService.getDados().subscribe(
+    this.chamaApiService.getDados(this.username).subscribe(
       (response) => {
         this.dados = response;
         console.log('Dados recebidos:', this.dados);
@@ -41,7 +46,6 @@ export class PrincipalComponent implements OnInit{
       }
     );
   }
-
   getHiddenName(): string {
     let resultado = '';
     if (this.dados?.name){

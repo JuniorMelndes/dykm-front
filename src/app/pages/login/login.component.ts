@@ -16,7 +16,7 @@ export class LoginComponent {
 
   submit() {
     if (this.username) {
-      this.router.navigate(['/principal']);
+      this.router.navigate(['/principal'], { state: { username: this.username } });
     } else {
       alert("Por favor, insira um nome de usuário.");
     }

@@ -10,7 +10,7 @@ export class ChamaApiService {
   
   constructor(private http: HttpClient) { }
   
-  getDados(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/teste`);
+  getDados(nomeUsuario: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/getArtist/${nomeUsuario}`);
   }
 }
